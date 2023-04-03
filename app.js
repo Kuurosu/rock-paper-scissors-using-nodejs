@@ -23,19 +23,19 @@ const server = http.createServer((req, res) => {
     }
 });
 
-server.listen(3000, () => {
+server.listen(5500, () => {
     console.log(server.address().port);
 });
 
 function handlePostResponse(req, res) {
-    request.setEncoding("utf8");
+    req.setEncoding("utf8");
 
     let body = "";
-    request.on("data", (chunk) => {
+    req.on("data", (chunk) => {
         body += chunk;
     });
 
-    request.on("end", () => {
+    req.on("end", () => {
         const choices = ["rock", "paper", "scissors"];
         const randomChoice = choices[Math.floor(Math.random() * 3)];
 
@@ -58,7 +58,7 @@ function handlePostResponse(req, res) {
         } else {
             message = defeat;
         }
-        response.writeHead(200, { "Content-Type": "text/html" });
-        response.end(`You chose ${choice} and the computer chose ${randomChoice}.`)
+        res.writeHead(200, { "Content-Type": "text/html" });
+        res.end(`You chose ${choice} and the computer chose ${randomChoice}.`)
     });
 }
